@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
     case 'TODOS_ADD':
       const newData = state.data
-
+      newData.pop()
       newData.unshift(action.payload)
 
       return { ...state, data: newData, isLoading: false };

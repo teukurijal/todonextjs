@@ -29,18 +29,19 @@ class TodosPage extends React.Component {
               todos: '',
             }}
             onSubmit={this.onSubmit.bind(this)} >
-            <Form className="d-flex justify-content-center pt-5 pb-5" >
+            <Form className="d-flex justify-content-center pt-5 pb-2" >
               <Field
                 required
                 name="todos"
                 placehoder="create todos"
                 component="input"/>
+              
               <button disabled={this.props.isLoading} type="submit" className="button btn-primary" >Add</button>
             </Form>
           </Formik>
-          <div className="flex-1 d-flex justify-content-center" >
-            <div className="card">
-              <ul className="list-group list-group-flush">
+          <div className="flex-1 d-flex  justify-content-center" >
+            <div className="d-flex flex-column">
+              <ul className="list-group list-group-flush card">
                 {
                   this.props.data.map((item, index) => {
                     return( 
@@ -54,6 +55,26 @@ class TodosPage extends React.Component {
                   })
                 }
               </ul>
+              <div className="mt-2">
+              <Formik 
+                 initialValues={{
+                  notes: '',
+                }}
+              >
+                <Form className="d-flex flex-column justify-content-center">
+                  <Field
+                    required
+                    placehoder="date"
+                    component="text-area"
+                  />
+                  <labe>
+                    Notes:
+                  </labe>
+                  <textarea>Input Your Note here</textarea>
+                </Form>
+              </Formik>
+              </div>
+             
             </div>
           </div>
         </div>
