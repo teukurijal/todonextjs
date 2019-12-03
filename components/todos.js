@@ -5,6 +5,14 @@ import { Formik, Field, Form } from 'formik';
 import * as actions from '../redux/action';
 
 class TodosPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      notes: '',
+    }
+  }
+
   componentDidMount() {
     const { getTodos } = this.props;
     getTodos();
@@ -13,6 +21,14 @@ class TodosPage extends React.Component {
   onSubmit(values) {
     const { createTodos } = this.props;
     createTodos(values);
+  }
+
+  onSubmitNote(values) {
+
+  }
+
+  handleChange(event) {
+    this.setState({ notes: event.target.value})
   }
 
   onDelete(values) {
@@ -41,6 +57,33 @@ class TodosPage extends React.Component {
           </Formik>
           <div className="flex-1 d-flex  justify-content-center" >
             <div className="d-flex flex-column">
+            {/* <div className="mt-2 mb-5">
+              <Formik 
+                 initialValues={{
+                  notes: '',
+                }}
+                onSubmitNote={this.onSubmitNote.bind(this)}
+              >
+                <Form className="d-flex flex-column justify-content-center">
+                  <Field
+                    required
+                    placehoder="date"
+                    component="text-area"
+                  />
+                  <labe>
+                    Notes:
+                  </labe>
+                  <textarea>Input Your Note here</textarea>
+                  <button>Add note</button>
+                </Form>
+              </Formik>
+              </div > */}
+              <div className="d-flex flex-column justify-content-center mb-5">
+                <labe>
+                  MyNotes
+                </labe>
+                <textarea value={this.state.notes} onChange={this.handleChange.bind(this)}/>
+              </div>
               <ul className="list-group list-group-flush card">
                 {
                   this.props.data.map((item, index) => {
@@ -55,26 +98,6 @@ class TodosPage extends React.Component {
                   })
                 }
               </ul>
-              <div className="mt-2">
-              <Formik 
-                 initialValues={{
-                  notes: '',
-                }}
-              >
-                <Form className="d-flex flex-column justify-content-center">
-                  <Field
-                    required
-                    placehoder="date"
-                    component="text-area"
-                  />
-                  <labe>
-                    Notes:
-                  </labe>
-                  <textarea>Input Your Note here</textarea>
-                </Form>
-              </Formik>
-              </div>
-             
             </div>
           </div>
         </div>
