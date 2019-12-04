@@ -10,7 +10,7 @@ class TodosPage extends React.Component {
     super(props);
     this.state = {
       notes: 'testernkalscn',
-      disabled: false,
+      disabled: true,
     }
   }
 
@@ -60,6 +60,7 @@ class TodosPage extends React.Component {
             <Form className="d-flex justify-content-center pt-5 pb-2" >
               <Field
                 required
+                className="border border-primary"
                 name="todos"
                 placeholder="create todos"
                 component="input"/>
@@ -69,7 +70,7 @@ class TodosPage extends React.Component {
           </Formik>
           <div className="flex-1 d-flex  justify-content-center" >
             <div className="d-flex flex-column">
-            <div className="mt-2 mb-5">
+            <div className="mt-2 mb-5 ">
               {this.state.disabled ?
               (<Formik 
                  initialValues={{
@@ -77,39 +78,42 @@ class TodosPage extends React.Component {
                 }}
                 onSubmit={this.onAddNote.bind(this)}
               >
-                <Form className="d-flex flex-column justify-content-center">
-                <label>
-                    My Notes:
+                <Form className="d-flex flex-column justify-content-center ">
+                  <label className="font-weight-bold">
+                    My Notes
                   </label>
                   <Field
                     required
+                    className="border border-primary"
                     name="notes"
-                    placehoder="create notes"
+                    placeholder="input notes"
                     component="textarea"
                   />
                  
-                  <button type="submit" className="button btn-primary" >Add note</button>
+                  <button type="submit" className="btn btn-primary" >Add note</button>
                 </Form>
               </Formik>)
               :
                 (<div className="d-flex flex-column justify-content-center">
-                <label>
-                  My Notes:
+                <label className="font-weight-bold">
+                  My Notes
                 </label>
                 <textarea disabled={true}>{this.props.notes}</textarea>
-                <button onClick={this.onEditNote.bind(this)}>Edit note</button>
+                <button className="btn btn-secondary" onClick={this.onEditNote.bind(this)}>Edit note</button>
               </div>)}
               
               </div >
-              
-              <ul className="list-group list-group-flush card">
+                <label className="font-weight-bold">
+                  Todo List
+                </label>
+              <ul className="list-group list-group-flush card border border-primary">
                 {
                   this.props.data.map((item, index) => {
                     return( 
                     <div className="">
                       <li key={index} className="list-group-item d-flex justify-content-between">
                         {item.title}
-                        <button className="ml-3 button btn-danger" onClick={this.onDelete.bind(this, item.title)}>x</button>
+                        <button className="ml-3 button btn-danger" onClick={this.onDelete.bind(this, item.title)}>Delete</button>
                       </li>
                     </div>
                     )
