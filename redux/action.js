@@ -62,3 +62,20 @@ export const deleteTodos = (todos) => async dispatch => {
     });
   }
 }
+
+export const addNotes = (notes) => async dispatch => {
+  try {
+    dispatch({
+      type: 'NOTES_REQUEST',
+    });
+
+    dispatch({
+      type: 'NOTES_FULFILLED',
+      payload: notes,
+    });
+  } catch (err) {
+    dispatch({
+      type: 'NOTES_FAILED'
+    });
+  }
+}

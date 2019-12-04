@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 const initialState = {
+  notes: '',
   data: [],
   isLoading: false,
   isError: false,
@@ -16,12 +17,15 @@ const reducer = (state = initialState, action) => {
       const newData = state.data
       newData.pop()
       newData.unshift(action.payload)
-
       return { ...state, data: newData, isLoading: false };
     case 'TODOS_DELETE':
       const newDatas = state.data.filter(e => e.title !== action.payload)
 
       return {...state, data: newDatas, isLoading: false};
+    case 'NOTES_FULFILLED':
+      // console.log('>>>>>>>',action.payload) 
+        
+      return { ...state, notes: action.payload, isLoading: false };
     case 'TODOS_FULFILLED':
       return { ...state, data: action.payload, isLoading: false };
     case 'TODOS_FAILED':

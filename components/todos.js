@@ -15,6 +15,7 @@ class TodosPage extends React.Component {
   }
 
   componentDidMount() {
+    
     const { getTodos } = this.props;
     getTodos();
   }  
@@ -29,8 +30,11 @@ class TodosPage extends React.Component {
   }
 
   onAddNote(values) {
+    const { addNotes } = this.props
+    addNotes(values)
     this.setState({disabled: false })
   }
+
   onEditNote(values) {
     this.setState({disabled: true})
   }
@@ -57,7 +61,7 @@ class TodosPage extends React.Component {
               <Field
                 required
                 name="todos"
-                placehoder="create todos"
+                placeholder="create todos"
                 component="input"/>
               
               <button disabled={this.props.isLoading} type="submit" className="button btn-primary" >Add</button>
@@ -69,22 +73,22 @@ class TodosPage extends React.Component {
               {this.state.disabled ?
               (<Formik 
                  initialValues={{
-                  notes: '',
+                  notes: this.props.notes,
                 }}
-                onSubmit={this.onSubmitNote.bind(this)}
+                onSubmit={this.onAddNote.bind(this)}
               >
                 <Form className="d-flex flex-column justify-content-center">
+                <label>
+                    My Notes:
+                  </label>
                   <Field
                     required
                     name="notes"
                     placehoder="create notes"
-                    component="tea"
+                    component="textarea"
                   />
-                  <label>
-                    My Notes:
-                  </label>
-                  <textarea>{this.state.notes}</textarea>
-                  <button type="submit" onClick={this.onAddNote.bind(this)}>Add note</button>
+                 
+                  <button type="submit" className="button btn-primary" >Add note</button>
                 </Form>
               </Formik>)
               :
@@ -92,7 +96,7 @@ class TodosPage extends React.Component {
                 <label>
                   My Notes:
                 </label>
-                <textarea disabled={true}>{this.state.notes}</textarea>
+                <textarea disabled={true}>{this.props.notes}</textarea>
                 <button onClick={this.onEditNote.bind(this)}>Edit note</button>
               </div>)}
               
@@ -126,6 +130,7 @@ class TodosPage extends React.Component {
 }
 
 const mapStateToProps = ({ todos }) => ({
+  notes: todos.notes.notes,
   data: todos.data,
   isLoading: todos.isLoading,
   isError: todos.isError,
