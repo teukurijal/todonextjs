@@ -9,7 +9,8 @@ class TodosPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: '',
+      notes: 'testernkalscn',
+      disabled: false,
     }
   }
 
@@ -24,7 +25,14 @@ class TodosPage extends React.Component {
   }
 
   onSubmitNote(values) {
+    this.setState({notes: values, disabled: false})
+  }
 
+  onAddNote(values) {
+    this.setState({disabled: false })
+  }
+  onEditNote(values) {
+    this.setState({disabled: true})
   }
 
   handleChange(event) {
@@ -57,33 +65,39 @@ class TodosPage extends React.Component {
           </Formik>
           <div className="flex-1 d-flex  justify-content-center" >
             <div className="d-flex flex-column">
-            {/* <div className="mt-2 mb-5">
-              <Formik 
+            <div className="mt-2 mb-5">
+              {this.state.disabled ?
+              (<Formik 
                  initialValues={{
                   notes: '',
                 }}
-                onSubmitNote={this.onSubmitNote.bind(this)}
+                onSubmit={this.onSubmitNote.bind(this)}
               >
                 <Form className="d-flex flex-column justify-content-center">
                   <Field
                     required
-                    placehoder="date"
-                    component="text-area"
+                    name="notes"
+                    placehoder="create notes"
+                    component="tea"
                   />
-                  <labe>
-                    Notes:
-                  </labe>
-                  <textarea>Input Your Note here</textarea>
-                  <button>Add note</button>
+                  <label>
+                    My Notes:
+                  </label>
+                  <textarea>{this.state.notes}</textarea>
+                  <button type="submit" onClick={this.onAddNote.bind(this)}>Add note</button>
                 </Form>
-              </Formik>
-              </div > */}
-              <div className="d-flex flex-column justify-content-center mb-5">
-                <labe>
-                  MyNotes
-                </labe>
-                <textarea value={this.state.notes} onChange={this.handleChange.bind(this)}/>
-              </div>
+              </Formik>)
+              :
+                (<div className="d-flex flex-column justify-content-center">
+                <label>
+                  My Notes:
+                </label>
+                <textarea disabled={true}>{this.state.notes}</textarea>
+                <button onClick={this.onEditNote.bind(this)}>Edit note</button>
+              </div>)}
+              
+              </div >
+              
               <ul className="list-group list-group-flush card">
                 {
                   this.props.data.map((item, index) => {
